@@ -1,0 +1,53 @@
+
+ALTER PROC [dbo].[SurveyAnswers_Update]
+					@InstanceId int
+					,@QuestionId int
+					,@AnswerOptionId int
+					,@Answer nvarchar(500)
+					,@AnswerNumber int
+					,@Id int 
+
+/*
+
+	DECLARE @InstanceId int = 3
+			,@QuestionId int = 3
+			,@AnswerOptionId int = 5
+			,@Answer nvarchar(500) = 'The answer to all of the questions'
+			,@AnswerNumber int = 3
+			,@Id int = 4
+
+
+	EXECUTE [dbo].[SurveyAnswers_Update]
+						@InstanceId
+						,@QuestionId
+						,@AnswerOptionId
+						,@Answer
+						,@AnswerNumber
+						,@Id 
+
+
+	SELECT *
+	FROM [dbo].[SurveyAnswers]
+
+
+*/						
+AS
+
+BEGIN
+	
+	DECLARE @DateModified datetime2 = getutcdate();
+
+	Update [dbo].[SurveyAnswers]
+	
+	SET	[InstanceId]=@InstanceId
+		,[QuestionId]=@QuestionId
+		,[AnswerOptionId]=@AnswerOptionId
+		,[Answer]=@Answer
+		,[AnswerNumber]=@AnswerNumber
+		,[DateModified]=@DateModified
+			
+	WHERE Id = @Id
+
+	
+END
+
