@@ -1,0 +1,72 @@
+
+
+ALTER PROC [dbo].[SurveysInstances_InsertV2]
+					@batchSurveys [dbo].[SurveyAnswersUDT_V2] READONLY
+					,@SurveyId int
+					,@UserId int
+					,@StatusId int
+					,@InstanceId int OUTPUT		
+				
+
+/*
+
+	DECLARE @batchSurveys dbo.SurveyAnswersUDT_V2
+
+	INSERT INTO @batchSurveys(QuestionId,AnswerOptionId,Answer,AnswerNumber)
+	VALUES (4,5,'Almight Potato',1)
+
+
+	DECLARE @SurveyId int = 4	
+			,@UserId int = 1
+			,@StatusId int = 1
+			,@InstanceId int = 4
+
+	EXECUTE [dbo].[SurveysInstances_InsertV2]
+						@batchSurveys
+						,@SurveyId
+						,@UserId
+						,@StatusId
+						,@InstanceId OUTPUT
+						
+
+	SELECT *
+	FROM [dbo].[SurveyAnswers]
+
+
+*/						
+AS
+
+BEGIN
+
+	
+	INSERT INTO [dbo].[SurveysInstances] 
+				([SurveyId]
+				,[UserId]
+				,[StatusId])		
+				
+	VALUES (@SurveyId
+			,@UserId
+			,@StatusId)
+
+	SET @InstanceId = SCOPE_IDENTITY();
+
+
+	INSERT INTO [dbo].[SurveyAnswers]
+				([InstanceId]
+				,[QuestionId]
+				,[AnswerOptionId] 
+				,[Answer]
+				,[AnswerNumber]
+				)
+		
+	SELECT @InstanceId
+		   ,bs.QuestionId
+			,bs.AnswerOptionId 
+			,bs.Answer
+			,bs.AnswerNumber
+
+	FROM @batchSurveys as bs
+
+
+			
+END
