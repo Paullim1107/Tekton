@@ -1,0 +1,69 @@
+
+ALTER PROC [dbo].[SurveysInstances_Select_BySurveyId_V2]
+									@Id int
+								
+									
+/*
+	DECLARE @Id int = 27
+			
+	
+	EXECUTE [dbo].[SurveysInstances_Select_BySurveyId_V2]
+											@Id
+							
+
+	SELECT *
+	FROM dbo.SurveyAnswers
+
+	SELECT *
+	FROM dbo.SurveyQuestions
+
+	SELECT *
+	FROM dbo.Surveys
+
+	SELECT *
+	FROM dbo.SurveysInstances
+	
+*/
+
+
+AS
+
+
+BEGIN
+
+	SELECT s.Id
+		 , s.[Name]
+		 , s.CompanyLogo
+		 , s.[Description]
+		 , st.id as SurveyTypeId
+		 , st.[Name] as SurveyType
+		, QuestionOptions  = (SELECT
+								sq.Id
+								, sq.[Question]
+								, sq.SortOrder
+								, qt.id as QuestionTypeId
+								, qt.[Name] as QuestionType
+								,AnswerOptions =(SELECT
+												sqa.Id 
+												,sqa.SortOrder
+												,sqa.[Text]
+												,sqa.[Value]
+								
+								FROM [dbo].[SurveyQuestionAnswerOptions] as sqa
+								WHERE sq.Id = sqa.QuestionId
+								FOR JSON PATH
+								)
+														
+							FROM  dbo.SurveyQuestions as sq							
+								inner join dbo.QuestionTypes as qt
+									ON Qt.Id = sq.QuestionTypeId
+								
+				
+							WHERE sq.SurveyId = @Id FOR JSON PATH)
+	FROM dbo.Surveys as s 
+	Join dbo.SurveyTypes as st on st.Id = s.SurveyTypeId
+
+
+	WHERE s.Id = @Id
+
+END
