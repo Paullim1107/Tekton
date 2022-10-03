@@ -1,0 +1,44 @@
+
+ALTER PROC [dbo].[SurveysInstances_Update]
+					@SurveyId int
+					,@UserId int
+					,@StatusId int
+					,@Id int 
+
+/*
+
+	DECLARE @Surveyid int = 5
+			,@UserId int = 4
+			,@StatusId int = 2
+			,@Id int = 8
+
+
+	EXECUTE [dbo].[SurveysInstances_Update]
+						@Surveyid
+						,@UserId
+						,@StatusId
+						,@Id 
+
+
+	SELECT *
+	FROM [dbo].[SurveysInstances]
+
+	
+*/						
+AS
+
+BEGIN
+	
+	DECLARE @DateModified datetime2 = getutcdate();
+
+	UPDATE [dbo].[SurveysInstances]
+
+	SET	[SurveyId]=@SurveyId
+		,[UserId]=@UserId
+		,[StatusId]=@StatusId
+		
+	
+	WHERE Id = @Id
+
+			
+END
