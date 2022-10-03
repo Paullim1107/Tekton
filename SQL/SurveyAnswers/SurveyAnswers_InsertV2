@@ -1,0 +1,58 @@
+
+ALTER PROC [dbo].[SurveyAnswers_InsertV2]
+					@batchSurveys dbo.SurveyAnswersUDT READONLY
+					,@InstanceId int		
+					,@Id int OUTPUT
+
+/*
+	DECLARE @batchSurveys dbo.SurveyAnswersUDT
+
+	INSERT INTO @batchSurveys(QuestionId,AnswerOptionId,Answer,AnswerNumber)
+	VALUES (2,3,'Almight Potato',4)
+
+
+	DECLARE @InstanceId int = 4	
+			,@Id int = 1
+
+	EXECUTE [dbo].[SurveyAnswers_InsertV2]
+						@batchSurveys
+						,@InstanceId
+						,@Id OUTPUT
+
+	SELECT *
+	FROM [dbo].[SurveyAnswers]
+
+
+*/						
+AS
+
+BEGIN
+	
+
+	INSERT INTO [dbo].[SurveyAnswers]
+				([InstanceId]
+				,[QuestionId]
+				,[AnswerOptionId]
+				,[Answer]
+				,[AnswerNumber]
+				)
+		
+	SELECT @InstanceId
+		   ,bs.QuestionId
+			,bs.AnswerOptionId
+			,bs.Answer
+			,bs.AnswerNumber
+
+	FROM @batchSurveys as bs
+	WHERE NOT EXISTS (
+						SELECT 1
+						FROM [dbo].[SurveyAnswers] as sa
+						WHERE sa.Id = bs.Id
+						)
+
+	--VALUES (@InstanceId)
+
+		SET @Id = SCOPE_IDENTITY();
+
+			
+END
