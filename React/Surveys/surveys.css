@@ -1,0 +1,78 @@
+.survey-answer-card-body {
+    box-sizing: border-box;
+    width: max-content;
+    height: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.survey-answer-result-body {
+    width: fit-content;
+    height: auto;
+}
+
+.sa-row {
+    width: max-content;
+    justify-content: center;
+}
+
+.sa-result-btn {
+    margin-bottom: 10px;
+}
+
+.survey-answer-container {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+
+.survey-answer-row {
+    --bs-gutter-y: 1.5rem;
+    --bs-gutter-x: 1.5rem;
+}
+
+.qa-result {
+    width: auto;
+}
+
+.survey-answer-card-img {
+    width: auto;
+    height: auto;
+    transform: scale(1);
+    transition: transform 0.5s ease;
+}
+
+.survey-answer-profile-img {
+    width: 100px;
+    height: auto;
+}
+
+.survey-answer-card-img:hover {
+    transform: scale(1.1);
+}
+
+.survey-ac-overflow {
+    overflow: hidden;
+}
+
+.survey-answer-footer {
+    height: auto;
+    width: auto;
+}
+
+.survey-answer-banner {
+    background-image: url('../../assets/images/hero-tekton.jpg');
+    height: 120px;
+    background-size: contain;
+    margin-bottom: 15px;
+    margin-top: 0%;
+}
+
+.sa-banner-text {
+    font-weight: bolder;
+    margin-top: 0%;
+    color: white;
+    font-size: 47px;
+    -webkit-text-stroke: 3px black;
+}
