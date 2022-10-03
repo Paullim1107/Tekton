@@ -1,0 +1,76 @@
+
+ALTER PROC [dbo].[SurveysInstances_Select_BySurveyId]
+									@Id int
+								
+									
+/*
+	DECLARE @Id int = 1
+			
+	
+	EXECUTE [dbo].[SurveysInstances_Select_BySurveyId]
+											@Id
+							
+
+	SELECT *
+	FROM dbo.SurveyAnswers
+
+	SELECT *
+	FROM dbo.SurveyQuestions
+
+	SELECT *
+	FROM dbo.Surveys
+
+	SELECT *
+	FROM dbo.SurveysInstances
+	
+*/
+
+
+AS
+
+--Details: join everything to show questions and answer. 
+BEGIN
+
+	
+
+  SELECT s.Id
+		 , s.[Name]
+		 , s.CompanyLogo
+		 , st.id as SurveyTypeId
+		 , st.[Name] as SurveyType
+		 , si.DateCreated
+		 , si.DateModified
+		 , u.Id as UserId
+		 , u.Email
+		 , up.FirstName
+		 , up.LastName
+		 , up.MI
+		 , up.AvatarUrl
+		, QuestionsAnswers  = (SELECT
+								sq.Id
+								, sq.[Question]
+								, sq.SortOrder
+								, qt.id as QuestionTypeId
+								, qt.[Name] as QuestionType
+								,sqa.[Text]
+								,sqa.[Value]
+								,sa.[Answer]
+							FROM dbo.SurveysInstances as si 
+								inner join dbo.SurveyAnswers as sa
+									on si.Id = sa.InstanceId 
+								inner join [dbo].[SurveyQuestionAnswerOptions] as sqa
+									on sa.AnswerOptionId = sqa.Id
+								inner join [dbo].[SurveyQuestions] as sq
+									on sqa.QuestionId = sq.Id
+								JOIN dbo.QuestionTypes as qt ON Qt.Id = sq.QuestionTypeId
+							WHERE si.Id = @Id FOR JSON PATH)
+	FROM dbo.Surveys as s 
+	Join dbo.SurveyTypes as st on st.Id = s.SurveyTypeId
+	JOIN dbo.SurveysInstances as si on si.SurveyId = s.Id and si.SurveyId = @Id
+	LEFT JOIN dbo.Users as u on u.Id = si.UserId
+	LEFT JOIN dbo.UserProfiles as up on up.UserId = u.Id
+
+
+	WHERE s.Id = @Id
+
+END
