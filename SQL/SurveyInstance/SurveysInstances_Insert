@@ -1,0 +1,49 @@
+
+ALTER PROC [dbo].[SurveysInstances_Insert]
+					@Surveyid int
+					,@UserId int
+					,@StatusId int
+					,@Id int OUTPUT
+
+/*
+
+	DECLARE @Surveyid int = 3
+			,@UserId int = 3
+			,@StatusId int = 3
+			,@Id int = 1
+
+
+	EXECUTE [dbo].[SurveysInstances_Insert]
+						@Surveyid
+						,@UserId
+						,@StatusId
+						,@Id OUTPUT
+
+
+	SELECT *
+	FROM [dbo].[SurveysInstances]
+
+
+*/						
+AS
+
+BEGIN
+
+	INSERT INTO [dbo].[SurveysInstances]
+				([SurveyId]
+				,[UserId]
+				,[StatusId] 
+				)
+	
+	
+	VALUES (@Surveyid
+			,@UserId
+			,@StatusId 
+			)
+
+			SET @Id = SCOPE_IDENTITY();
+
+
+
+			
+END
