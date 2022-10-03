@@ -1,0 +1,88 @@
+
+ALTER PROC [dbo].[SurveysInstances_SelectAll]
+									@PageIndex int
+									,@PageSize int
+
+/*
+	DECLARE @PageIndex int = 0
+			,@PageSize int = 10
+	
+	EXECUTE [dbo].[SurveysInstances_SelectAll]
+								@PageIndex 
+								,@PageSize 
+
+	
+	SELECT *
+	FROM [dbo].[SurveyAnswers]
+
+	SELECT *
+	FROM [dbo].[SurveyQuestionAnswerOptions]
+
+	SELECT *
+	FROM [dbo].[SurveyQuestions]
+
+	SELECT *
+	FROM dbo.surveysInstances
+
+	SELECT *
+	FROM dbo.surveys
+
+*/
+
+
+AS
+
+--Details: join everything to show questions, QAO and the answer. Paginated
+BEGIN
+
+	DECLARE @offset int = @PageIndex * @PageSize
+	
+	  SELECT si.Id as InstanceId
+		 , s.[Name]
+		 , s.CompanyLogo
+		 , st.id as SurveyTypeId
+		 , st.[Name] as SurveyType
+		 , si.DateCreated
+		 , si.DateModified
+		 , u.Id as UserId
+		 , u.Email
+		 , up.FirstName
+		 , up.LastName
+		 , up.MI
+		 , up.AvatarUrl
+		, SurveyInfo  = (SELECT
+								sq.Id 
+								, sq.[Question]
+								, sq.SortOrder
+								, qt.id as QuestionTypeId
+								, qt.[Name] as QuestionType
+								,sqa.[Text]
+								,sqa.[Value]
+								,sa.[Answer]
+								,sa.[Id] as AnswerId
+							FROM dbo.SurveysInstances as si 
+								left join dbo.SurveyAnswers as sa
+									on si.Id = sa.InstanceId 
+								left join [dbo].[SurveyQuestionAnswerOptions] as sqa
+									on sa.AnswerOptionId = sqa.Id
+								left join [dbo].[SurveyQuestions] as sq
+									on sqa.QuestionId = sq.Id
+								left JOIN dbo.QuestionTypes as qt 
+									ON Qt.Id = sq.QuestionTypeId
+							WHERE si.SurveyId = s.Id
+							FOR JSON PATH)
+		,TotalCount = COUNT(1) OVER()
+	FROM dbo.Surveys as s 
+	Join dbo.SurveyTypes as st on st.Id = s.SurveyTypeId
+	JOIN dbo.SurveysInstances as si on si.SurveyId = s.Id --and si.SurveyId = @Id
+	LEFT JOIN dbo.Users as u on u.Id = si.UserId
+	LEFT JOIN dbo.UserProfiles as up on up.UserId = u.Id
+
+
+	ORDER BY si.Id
+
+	OFFSET @offset ROWS
+	FETCH NEXT @PageSize ROWS ONLY
+
+
+END
