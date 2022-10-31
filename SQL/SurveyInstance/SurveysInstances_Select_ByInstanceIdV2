@@ -1,6 +1,6 @@
 
 ALTER PROC [dbo].[SurveysInstances_Select_ByInstanceIdV2]
-									@Id int
+						@Id int
 
 /*
 	DECLARE @Id int = 1
@@ -49,12 +49,12 @@ BEGIN
 				sq.Id
 				, sq.[Question]
 				,QuestionCount = (
-									SELECT Count (*) AS TOTAL
-									FROM [dbo].[SurveyQuestions] as sq 
-												 inner join [dbo].[SurveysInstances] as si
-												 on sq.SurveyId = si.SurveyId
-												 WHERE si.Id = @Id 
-									)
+						 SELECT Count (*) AS TOTAL
+						 FROM [dbo].[SurveyQuestions] as sq 
+						 inner join [dbo].[SurveysInstances] as si
+						 on sq.SurveyId = si.SurveyId
+						 WHERE si.Id = @Id 
+						)
 				, sq.SortOrder
 				, qt.id as QuestionTypeId
 				, qt.[Name] as QuestionType
