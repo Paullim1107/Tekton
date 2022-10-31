@@ -1,7 +1,7 @@
 
 
 ALTER PROC [dbo].[SurveysInstances_Select_ByInstanceId]
-									@Id int
+						@Id int
 
 /*
 	DECLARE @Id int = 1
@@ -42,8 +42,8 @@ BEGIN
 		, up.MI
 		, up.AvatarUrl
 		, SurveyInfo  = 
-			(
-			SELECT
+				(
+				SELECT
 				si.Id as InstanceId
 				,sq.Id as QuestionId
 				, sq.[Question]
