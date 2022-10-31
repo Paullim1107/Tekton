@@ -1,15 +1,15 @@
 
 ALTER PROC [dbo].[SurveysInstances_SelectAll]
-									@PageIndex int
-									,@PageSize int
+				@PageIndex int
+				,@PageSize int
 
 /*
 	DECLARE @PageIndex int = 0
-			,@PageSize int = 10
+		,@PageSize int = 10
 	
 	EXECUTE [dbo].[SurveysInstances_SelectAll]
-								@PageIndex 
-								,@PageSize 
+					@PageIndex 
+					,@PageSize 
 
 	
 	SELECT *
@@ -51,26 +51,26 @@ BEGIN
 		 , up.MI
 		 , up.AvatarUrl
 		, SurveyInfo  = (SELECT
-								sq.Id 
-								, sq.[Question]
-								, sq.SortOrder
-								, qt.id as QuestionTypeId
-								, qt.[Name] as QuestionType
-								,sqa.[Text]
-								,sqa.[Value]
-								,sa.[Answer]
-								,sa.[Id] as AnswerId
-							FROM dbo.SurveysInstances as si 
-								left join dbo.SurveyAnswers as sa
-									on si.Id = sa.InstanceId 
-								left join [dbo].[SurveyQuestionAnswerOptions] as sqa
-									on sa.AnswerOptionId = sqa.Id
-								left join [dbo].[SurveyQuestions] as sq
-									on sqa.QuestionId = sq.Id
-								left JOIN dbo.QuestionTypes as qt 
-									ON Qt.Id = sq.QuestionTypeId
-							WHERE si.SurveyId = s.Id
-							FOR JSON PATH)
+				sq.Id 
+				, sq.[Question]
+				, sq.SortOrder
+				, qt.id as QuestionTypeId
+				, qt.[Name] as QuestionType
+				,sqa.[Text]
+				,sqa.[Value]
+				,sa.[Answer]
+				,sa.[Id] as AnswerId
+			FROM dbo.SurveysInstances as si 
+				left join dbo.SurveyAnswers as sa
+					on si.Id = sa.InstanceId 
+				left join [dbo].[SurveyQuestionAnswerOptions] as sqa
+					on sa.AnswerOptionId = sqa.Id
+				left join [dbo].[SurveyQuestions] as sq
+					on sqa.QuestionId = sq.Id
+				left JOIN dbo.QuestionTypes as qt 
+					ON Qt.Id = sq.QuestionTypeId
+			WHERE si.SurveyId = s.Id
+			FOR JSON PATH)
 		,TotalCount = COUNT(1) OVER()
 	FROM dbo.Surveys as s 
 	Join dbo.SurveyTypes as st on st.Id = s.SurveyTypeId
