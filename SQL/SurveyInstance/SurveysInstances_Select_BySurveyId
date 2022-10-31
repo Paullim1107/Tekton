@@ -1,6 +1,6 @@
 
 ALTER PROC [dbo].[SurveysInstances_Select_BySurveyId]
-									@Id int
+						@Id int
 								
 									
 /*
@@ -8,7 +8,7 @@ ALTER PROC [dbo].[SurveysInstances_Select_BySurveyId]
 			
 	
 	EXECUTE [dbo].[SurveysInstances_Select_BySurveyId]
-											@Id
+							@Id
 							
 
 	SELECT *
@@ -47,23 +47,23 @@ BEGIN
 		 , up.MI
 		 , up.AvatarUrl
 		, QuestionsAnswers  = (SELECT
-								sq.Id
-								, sq.[Question]
-								, sq.SortOrder
-								, qt.id as QuestionTypeId
-								, qt.[Name] as QuestionType
-								,sqa.[Text]
-								,sqa.[Value]
-								,sa.[Answer]
-							FROM dbo.SurveysInstances as si 
-								inner join dbo.SurveyAnswers as sa
-									on si.Id = sa.InstanceId 
-								inner join [dbo].[SurveyQuestionAnswerOptions] as sqa
-									on sa.AnswerOptionId = sqa.Id
-								inner join [dbo].[SurveyQuestions] as sq
-									on sqa.QuestionId = sq.Id
-								JOIN dbo.QuestionTypes as qt ON Qt.Id = sq.QuestionTypeId
-							WHERE si.Id = @Id FOR JSON PATH)
+					sq.Id
+					, sq.[Question]
+					, sq.SortOrder
+					, qt.id as QuestionTypeId
+					, qt.[Name] as QuestionType
+					,sqa.[Text]
+					,sqa.[Value]
+					,sa.[Answer]
+				FROM dbo.SurveysInstances as si 
+					inner join dbo.SurveyAnswers as sa
+						on si.Id = sa.InstanceId 
+					inner join [dbo].[SurveyQuestionAnswerOptions] as sqa
+						on sa.AnswerOptionId = sqa.Id
+					inner join [dbo].[SurveyQuestions] as sq
+						on sqa.QuestionId = sq.Id
+					JOIN dbo.QuestionTypes as qt ON Qt.Id = sq.QuestionTypeId
+				WHERE si.Id = @Id FOR JSON PATH)
 	FROM dbo.Surveys as s 
 	Join dbo.SurveyTypes as st on st.Id = s.SurveyTypeId
 	JOIN dbo.SurveysInstances as si on si.SurveyId = s.Id and si.SurveyId = @Id
