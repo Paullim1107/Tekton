@@ -1,16 +1,16 @@
 
 
 ALTER PROC [dbo].[SurveysInstances_SelectAll_V2]
-									@PageIndex int
-									,@PageSize int
+				@PageIndex int
+				,@PageSize int
 
 /*
 	DECLARE @PageIndex int = 0
-			,@PageSize int = 10
+		,@PageSize int = 10
 	
 	EXECUTE [dbo].[SurveysInstances_SelectAll_V2]
-								@PageIndex 
-								,@PageSize 
+					@PageIndex 
+					,@PageSize 
 
 	
 	SELECT *
@@ -33,14 +33,13 @@ ALTER PROC [dbo].[SurveysInstances_SelectAll_V2]
 
 AS
 
---Details: join everything to show questions, QAO and the answer. Paginated S
+
 BEGIN
 
 	DECLARE @offset int = @PageIndex * @PageSize
 	
-	  SELECT 
-			--si.Id as InstanceId
-			s.Id as SurveyId
+	 	 SELECT 		
+		 s.Id as SurveyId
 		 , s.[Name]
 		 , s.CompanyLogo
 		 , st.id as SurveyTypeId
@@ -54,36 +53,36 @@ BEGIN
 		 , up.MI
 		 , up.AvatarUrl
 		, SurveyInfo  =(
+				SELECT DISTINCT
+				si.Id as InstanceId					
+				,Questions = (
 						SELECT DISTINCT
-						si.Id as InstanceId					
-						,Questions = (
-										SELECT DISTINCT
-										sq.Id as QuestionId
-										,sq.[Question]
-										,sq.SortOrder
-										,qt.Id as QuestionTypeId
-										,qt.[Name] as QuestionType
-										,Answer = (
-													SELECT 
-													sa.Answer
-													,sqa.[Text]
-													,sqa.[Value]
-													FROM dbo.[SurveyAnswers] as sa
-													inner join dbo.[SurveyQuestionAnswerOptions] as sqa
-													on sa.AnswerOptionId = sqa.Id
-													WHERE sa.InstanceId = si.Id
-													FOR JSON AUTO
-													)
-										FROM dbo.[SurveyQuestions] as sq
-										inner join dbo.[SurveyAnswers] as sa
-										on sq.Id = sa.QuestionId
-										inner join dbo.[QuestionTypes] as qt
-										on qt.Id = sq.QuestionTypeId
-										WHERE si.SurveyId = s.Id		
-										FOR JSON AUTO
-										)
-						FOR JSON PATH
-						)	
+						sq.Id as QuestionId
+						,sq.[Question]
+						,sq.SortOrder
+						,qt.Id as QuestionTypeId
+						,qt.[Name] as QuestionType
+						,Answer = (
+									SELECT 
+									sa.Answer
+									,sqa.[Text]
+									,sqa.[Value]
+									FROM dbo.[SurveyAnswers] as sa
+									inner join dbo.[SurveyQuestionAnswerOptions] as sqa
+									on sa.AnswerOptionId = sqa.Id
+									WHERE sa.InstanceId = si.Id
+									FOR JSON AUTO
+									)
+						FROM dbo.[SurveyQuestions] as sq
+						inner join dbo.[SurveyAnswers] as sa
+						on sq.Id = sa.QuestionId
+						inner join dbo.[QuestionTypes] as qt
+						on qt.Id = sq.QuestionTypeId
+						WHERE si.SurveyId = s.Id		
+						FOR JSON AUTO
+						)
+				FOR JSON PATH
+				)	
 		,TotalCount = COUNT(1) OVER()
 	
 	FROM dbo.SurveysInstances as si
