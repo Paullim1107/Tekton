@@ -1,23 +1,23 @@
 
 ALTER PROC [dbo].[SurveysInstances_Insert]
-					@Surveyid int
-					,@UserId int
-					,@StatusId int
-					,@Id int OUTPUT
+			@Surveyid int
+			,@UserId int
+			,@StatusId int
+			,@Id int OUTPUT
 
 /*
 
 	DECLARE @Surveyid int = 3
-			,@UserId int = 3
-			,@StatusId int = 3
-			,@Id int = 1
+		,@UserId int = 3
+		,@StatusId int = 3
+		,@Id int = 1
 
 
 	EXECUTE [dbo].[SurveysInstances_Insert]
-						@Surveyid
-						,@UserId
-						,@StatusId
-						,@Id OUTPUT
+				@Surveyid
+				,@UserId
+				,@StatusId
+				,@Id OUTPUT
 
 
 	SELECT *
@@ -41,7 +41,7 @@ BEGIN
 			,@StatusId 
 			)
 
-			SET @Id = SCOPE_IDENTITY();
+	SET @Id = SCOPE_IDENTITY();
 
 
 
