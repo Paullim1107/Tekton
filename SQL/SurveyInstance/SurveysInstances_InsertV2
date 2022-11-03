@@ -1,12 +1,12 @@
 
 
 ALTER PROC [dbo].[SurveysInstances_InsertV2]
-					@batchSurveys [dbo].[SurveyAnswersUDT_V2] READONLY
-					,@SurveyId int
-					,@UserId int
-					,@StatusId int
-					,@InstanceId int OUTPUT		
-				
+		@batchSurveys [dbo].[SurveyAnswersUDT_V2] READONLY
+		,@SurveyId int
+		,@UserId int
+		,@StatusId int
+		,@InstanceId int OUTPUT		
+
 
 /*
 
@@ -22,11 +22,11 @@ ALTER PROC [dbo].[SurveysInstances_InsertV2]
 			,@InstanceId int = 4
 
 	EXECUTE [dbo].[SurveysInstances_InsertV2]
-						@batchSurveys
-						,@SurveyId
-						,@UserId
-						,@StatusId
-						,@InstanceId OUTPUT
+				@batchSurveys
+				,@SurveyId
+				,@UserId
+				,@StatusId
+				,@InstanceId OUTPUT
 						
 
 	SELECT *
@@ -60,10 +60,10 @@ BEGIN
 				)
 		
 	SELECT @InstanceId
-		   ,bs.QuestionId
-			,bs.AnswerOptionId 
-			,bs.Answer
-			,bs.AnswerNumber
+		,bs.QuestionId
+		,bs.AnswerOptionId 
+		,bs.Answer
+		,bs.AnswerNumber
 
 	FROM @batchSurveys as bs
 
