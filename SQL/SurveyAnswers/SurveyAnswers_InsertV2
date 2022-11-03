@@ -1,8 +1,8 @@
 
 ALTER PROC [dbo].[SurveyAnswers_InsertV2]
-					@batchSurveys dbo.SurveyAnswersUDT READONLY
-					,@InstanceId int		
-					,@Id int OUTPUT
+		@batchSurveys dbo.SurveyAnswersUDT READONLY
+		,@InstanceId int		
+		,@Id int OUTPUT
 
 /*
 	DECLARE @batchSurveys dbo.SurveyAnswersUDT
@@ -15,9 +15,9 @@ ALTER PROC [dbo].[SurveyAnswers_InsertV2]
 			,@Id int = 1
 
 	EXECUTE [dbo].[SurveyAnswers_InsertV2]
-						@batchSurveys
-						,@InstanceId
-						,@Id OUTPUT
+				@batchSurveys
+				,@InstanceId
+				,@Id OUTPUT
 
 	SELECT *
 	FROM [dbo].[SurveyAnswers]
@@ -38,21 +38,21 @@ BEGIN
 				)
 		
 	SELECT @InstanceId
-		   ,bs.QuestionId
-			,bs.AnswerOptionId
-			,bs.Answer
-			,bs.AnswerNumber
+		,bs.QuestionId
+		,bs.AnswerOptionId
+		,bs.Answer
+		,bs.AnswerNumber
 
 	FROM @batchSurveys as bs
 	WHERE NOT EXISTS (
-						SELECT 1
-						FROM [dbo].[SurveyAnswers] as sa
-						WHERE sa.Id = bs.Id
-						)
+			SELECT 1
+			FROM [dbo].[SurveyAnswers] as sa
+			WHERE sa.Id = bs.Id
+			)
 
 	--VALUES (@InstanceId)
 
-		SET @Id = SCOPE_IDENTITY();
+	SET @Id = SCOPE_IDENTITY();
 
 			
 END
