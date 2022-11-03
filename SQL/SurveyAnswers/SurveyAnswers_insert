@@ -49,11 +49,11 @@ BEGIN
 	
 	
 	VALUES (@InstanceId
-			,@QuestionId
-			,@AnswerOptionId 
-			,@Answer
-			,@AnswerNumber
-			)
+		,@QuestionId
+		,@AnswerOptionId 
+		,@Answer
+		,@AnswerNumber
+		)
 
 	SET @Id = SCOPE_IDENTITY();
 
