@@ -1,11 +1,11 @@
 
 ALTER PROC [dbo].[SurveyAnswers_Update]
-					@InstanceId int
-					,@QuestionId int
-					,@AnswerOptionId int
-					,@Answer nvarchar(500)
-					,@AnswerNumber int
-					,@Id int 
+			@InstanceId int
+			,@QuestionId int
+			,@AnswerOptionId int
+			,@Answer nvarchar(500)
+			,@AnswerNumber int
+			,@Id int 
 
 /*
 
@@ -18,12 +18,12 @@ ALTER PROC [dbo].[SurveyAnswers_Update]
 
 
 	EXECUTE [dbo].[SurveyAnswers_Update]
-						@InstanceId
-						,@QuestionId
-						,@AnswerOptionId
-						,@Answer
-						,@AnswerNumber
-						,@Id 
+				@InstanceId
+				,@QuestionId
+				,@AnswerOptionId
+				,@Answer
+				,@AnswerNumber
+				,@Id 
 
 
 	SELECT *
