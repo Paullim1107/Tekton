@@ -1,11 +1,11 @@
 
 ALTER PROC [dbo].[SurveyAnswers_Insert]
-					@InstanceId int
-					,@QuestionId int
-					,@AnswerOptionId int
-					,@Answer nvarchar(500)
-					,@AnswerNumber int
-					,@Id int OUTPUT
+			@InstanceId int
+			,@QuestionId int
+			,@AnswerOptionId int
+			,@Answer nvarchar(500)
+			,@AnswerNumber int
+			,@Id int OUTPUT
 
 /*
 
@@ -18,12 +18,12 @@ ALTER PROC [dbo].[SurveyAnswers_Insert]
 
 
 	EXECUTE [dbo].[SurveyAnswers_Insert]
-						@InstanceId
-						,@QuestionId
-						,@AnswerOptionId
-						,@Answer
-						,@AnswerNumber
-						,@Id OUTPUT
+				@InstanceId
+				,@QuestionId
+				,@AnswerOptionId
+				,@Answer
+				,@AnswerNumber
+				,@Id OUTPUT
 
 
 
@@ -55,7 +55,7 @@ BEGIN
 			,@AnswerNumber
 			)
 
-			SET @Id = SCOPE_IDENTITY();
+	SET @Id = SCOPE_IDENTITY();
 
 			
 END
