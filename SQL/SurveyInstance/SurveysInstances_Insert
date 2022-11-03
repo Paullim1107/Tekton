@@ -37,9 +37,9 @@ BEGIN
 	
 	
 	VALUES (@Surveyid
-			,@UserId
-			,@StatusId 
-			)
+		,@UserId
+		,@StatusId 
+		)
 
 	SET @Id = SCOPE_IDENTITY();
 
