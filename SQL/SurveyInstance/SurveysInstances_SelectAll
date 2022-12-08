@@ -60,17 +60,17 @@ BEGIN
 				,sqa.[Value]
 				,sa.[Answer]
 				,sa.[Id] as AnswerId
-			FROM dbo.SurveysInstances as si 
-				left join dbo.SurveyAnswers as sa
-					on si.Id = sa.InstanceId 
-				left join [dbo].[SurveyQuestionAnswerOptions] as sqa
-					on sa.AnswerOptionId = sqa.Id
-				left join [dbo].[SurveyQuestions] as sq
-					on sqa.QuestionId = sq.Id
-				left JOIN dbo.QuestionTypes as qt 
-					ON Qt.Id = sq.QuestionTypeId
-			WHERE si.SurveyId = s.Id
-			FOR JSON PATH)
+				FROM dbo.SurveysInstances as si 
+					left join dbo.SurveyAnswers as sa
+						on si.Id = sa.InstanceId 
+					left join [dbo].[SurveyQuestionAnswerOptions] as sqa
+						on sa.AnswerOptionId = sqa.Id
+					left join [dbo].[SurveyQuestions] as sq
+						on sqa.QuestionId = sq.Id
+					left JOIN dbo.QuestionTypes as qt 
+						ON Qt.Id = sq.QuestionTypeId
+				WHERE si.SurveyId = s.Id
+				FOR JSON PATH)
 		,TotalCount = COUNT(1) OVER()
 	FROM dbo.Surveys as s 
 	Join dbo.SurveyTypes as st on st.Id = s.SurveyTypeId
